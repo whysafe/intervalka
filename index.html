@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Интервалка — таймер для табаты, HIIT и бокса</title>
+  <meta name="description" content="Интервальный таймер: табата, HIIT, EMOM, раунды для бокса и свои тренировки. Голосовой отсчёт, работает офлайн и устанавливается на телефон.">
+  <meta name="theme-color" content="#111418">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+  <main class="app">
+    <!-- Экран настройки -->
+    <section class="screen setup" id="setup" aria-labelledby="setupTitle">
+      <header class="brand">
+        <svg viewBox="0 0 48 48" width="40" height="40" aria-hidden="true"><use href="icons/icon.svg#mark"/></svg>
+        <div>
+          <h1 id="setupTitle">Интервалка</h1>
+          <p>Таймер для интервальных тренировок</p>
+        </div>
+      </header>
+
+      <div class="presets" id="presets" role="group" aria-label="Готовые тренировки"></div>
+
+      <form class="config" id="config" autocomplete="off">
+        <div class="field" data-key="prepare"><span>Подготовка</span></div>
+        <div class="field accent-work" data-key="work"><span>Работа</span></div>
+        <div class="field accent-rest" data-key="rest"><span>Отдых</span></div>
+        <div class="field" data-key="rounds" data-unit="count"><span>Раундов</span></div>
+        <div class="field" data-key="sets" data-unit="count"><span>Кругов</span></div>
+        <div class="field" data-key="setRest"><span>Отдых между кругами</span></div>
+        <div class="field" data-key="cooldown"><span>Заминка</span></div>
+      </form>
+
+      <div class="summary" id="summary" aria-live="polite"></div>
+      <div class="timeline-bar" id="timelineBar" aria-hidden="true"></div>
+
+      <div class="options">
+        <label class="toggle"><input type="checkbox" id="optVoice" checked><span>Голосовой отсчёт</span></label>
+        <label class="toggle"><input type="checkbox" id="optBeep" checked><span>Сигналы</span></label>
+        <label class="toggle"><input type="checkbox" id="optVibrate" checked><span>Вибрация</span></label>
+      </div>
+
+      <div class="saved">
+        <div class="saved-head">
+          <h2>Мои тренировки</h2>
+          <button class="ghost small" id="saveBtn" type="button">Сохранить текущую</button>
+        </div>
+        <ul id="savedList"></ul>
+      </div>
+
+      <div class="actions">
+        <button class="go" id="startBtn" type="button">Старт</button>
+        <button class="ghost" id="shareBtn" type="button" title="Скопировать ссылку на эту тренировку">Поделиться</button>
+      </div>
+      <p class="hint" id="installHint" hidden>Добавьте на главный экран: таймер будет работать без интернета.</p>
+    </section>
+
+    <!-- Экран тренировки -->
+    <section class="screen run" id="run" hidden aria-label="Тренировка">
+      <div class="run-top">
+        <button class="icon" id="exitBtn" type="button" aria-label="Завершить тренировку">✕</button>
+        <span id="runTotal" class="muted"></span>
+        <button class="icon" id="soundBtn" type="button" aria-label="Звук">🔊</button>
+      </div>
+      <div class="dial">
+        <svg viewBox="0 0 220 220" aria-hidden="true">
+          <circle class="track" cx="110" cy="110" r="100"/>
+          <circle class="arc" id="arc" cx="110" cy="110" r="100"/>
+        </svg>
+        <div class="dial-text">
+          <p class="phase" id="phase"></p>
+          <p class="clock" id="clock" aria-live="off"></p>
+          <p class="round" id="round"></p>
+        </div>
+      </div>
+      <p class="next" id="next"></p>
+      <div class="progress"><span id="progress"></span></div>
+      <div class="run-controls">
+        <button class="icon big" id="prevBtn" type="button" aria-label="Предыдущий отрезок">⏮</button>
+        <button class="go round-btn" id="pauseBtn" type="button" aria-label="Пауза">❚❚</button>
+        <button class="icon big" id="skipBtn" type="button" aria-label="Следующий отрезок">⏭</button>
+      </div>
+      <div class="done" id="done" hidden>
+        <p class="done-title">Готово!</p>
+        <p id="doneText"></p>
+        <button class="go" id="againBtn" type="button">Ещё раз</button>
+        <button class="ghost" id="backBtn" type="button">К настройкам</button>
+      </div>
+    </section>
+  </main>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
